@@ -21,6 +21,7 @@ class ContactListRepositoryImpl : ContactListRepository {
                 "Phone ${Random.nextLong(1111111111, 9999999999)}",
                 Random.nextInt(0, 1)
             )
+            addContact(item)
         }
     }
 
