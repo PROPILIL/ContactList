@@ -2,6 +2,7 @@ package com.propil.contacts.domain
 
 data class Contact(
     val name: String,
+    val surname: String,
     val phoneNumber: String,
     val id: Int = UNDEFINED_ID
 ) {
