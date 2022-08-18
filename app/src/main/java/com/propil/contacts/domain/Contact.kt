@@ -5,7 +5,7 @@ data class Contact(
     val surname: String,
     val phoneNumber: String,
     val sex: Int,
-    val id: Int = UNDEFINED_ID
+    var id: Int = UNDEFINED_ID
 ) {
 
     companion object {
