@@ -6,7 +6,7 @@ import com.propil.contacts.domain.Contact
 import com.propil.contacts.domain.ContactListRepository
 import kotlin.random.Random
 
-class ContactListRepositoryImpl : ContactListRepository {
+object ContactListRepositoryImpl : ContactListRepository {
 
 
     private val contactList = sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })

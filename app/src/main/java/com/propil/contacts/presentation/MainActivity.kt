@@ -1,7 +1,8 @@
-package com.propil.contacts
+package com.propil.contacts.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.propil.contacts.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
