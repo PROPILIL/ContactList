@@ -9,7 +9,7 @@ import kotlin.random.Random
 object ContactListRepositoryImpl : ContactListRepository {
 
 
-    private val contactList = sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })
+    private val contactList = sortedSetOf<Contact>({ o1, o2 -> o1.name.compareTo(o2.name) })
     private val contactListLiveData = MutableLiveData<List<Contact>>()
     private var incrementId = 0
 
