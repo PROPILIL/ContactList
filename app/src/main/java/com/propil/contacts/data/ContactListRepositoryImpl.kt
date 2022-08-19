@@ -14,12 +14,11 @@ object ContactListRepositoryImpl : ContactListRepository {
     private var incrementId = 0
 
     init {
-        for (i in 0 until 1000) {
+        for (i in 0 until 100) {
             val item = Contact(
                 "Name $i",
                 "Surname $i",
-                "Phone ${Random.nextLong(1111111111, 9999999999)}",
-                Random.nextInt(0, 1)
+                Random.nextLong(1111111111, 9999999999)
             )
             addContact(item)
         }

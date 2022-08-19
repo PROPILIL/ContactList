@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/vladr/AndroidStudioProjects/Contacts/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.259" />
         <entry key="..\:/Users/vladr/AndroidStudioProjects/Contacts/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/vladr/AndroidStudioProjects/Contacts/app/src/main/res/layout/contact_detail_fragment.xml" value="0.322463768115942" />
         <entry key="..\:/Users/vladr/AndroidStudioProjects/Contacts/app/src/main/res/layout/contact_item.xml" value="0.365625" />
         <entry key="..\:/Users/vladr/AndroidStudioProjects/Contacts/app/src/main/res/layout/contact_list_fragment.xml" value="0.36666666666666664" />
       </map>
