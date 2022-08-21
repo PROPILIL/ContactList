@@ -1,11 +1,14 @@
 package com.propil.contacts.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.propil.contacts.R
+import com.propil.contacts.databinding.ActivityMainBinding
 import com.propil.contacts.databinding.ContactListFragmentBinding
 import com.propil.contacts.presentation.adapters.ContactListAdapter
 
@@ -13,6 +16,9 @@ class ContactListFragment : Fragment() {
 
     private lateinit var contactListAdapter: ContactListAdapter
     private lateinit var viewModel: ContactListViewModel
+    private var _activityBinding: ActivityMainBinding? = null
+    private val activityBinding: ActivityMainBinding
+        get() = _activityBinding ?: throw RuntimeException("ActivityMainBinding = null")
 
     private var _binding: ContactListFragmentBinding? = null
     private val binding: ContactListFragmentBinding
@@ -42,16 +48,42 @@ class ContactListFragment : Fragment() {
             contactListAdapter = ContactListAdapter()
             adapter = contactListAdapter
         }
+        setupClickListener()
+        setupLongClickListener()
+    }
+
+    private fun setupClickListener() {
+        contactListAdapter.onContactClick = {
+            launchFragment(ContactDetailFragment.newInstanceEdit(it.id))
+        }
+    }
+
+    private fun setupLongClickListener() {
+        contactListAdapter.onContactClick = {
+            viewModel.deleteContact(it)
+        }
+
+    }
+
+    private fun launchFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_activity_fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _activityBinding = null
     }
 
     companion object {
+
+
         fun newInstance(): ContactListFragment {
             return ContactListFragment()
         }
+
     }
 }

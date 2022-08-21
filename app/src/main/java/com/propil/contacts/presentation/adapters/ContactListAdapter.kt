@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.propil.contacts.databinding.ContactItemBinding
 import com.propil.contacts.domain.Contact
-import com.propil.contacts.presentation.adapters.ContactViewHolder
 
-class ContactListAdapter : ListAdapter<Contact, ContactViewHolder>(ContactDiffCallback()) {
+class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactDiffCallback()) {
+
+    var onContactClick: ((Contact) -> Unit)? = null
+    var onContactLongClick: ((Contact) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val binding = ContactItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,6 +26,15 @@ class ContactListAdapter : ListAdapter<Contact, ContactViewHolder>(ContactDiffCa
                 binding.contactPhone.text = this.phoneNumber.toString()
                 //FIXME: THE SAME IMAGE BUG (look in Contact data class)
                 binding.contactPhoto.load(this.photo)
+            }
+        }
+    }
+
+    inner class ContactViewHolder(val binding: ContactItemBinding): RecyclerView.ViewHolder(binding.root){
+
+        init {
+            binding.root.setOnClickListener {
+                onContactClick?.invoke(getItem(adapterPosition))
             }
         }
     }

@@ -6,6 +6,7 @@
     android:padding="16dp">
 
     <ImageView
+        android:id="@+id/contact_photo"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
         android:layout_marginBottom="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/count_field_editText"
+            android:id="@+id/surname_field_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Surname" />

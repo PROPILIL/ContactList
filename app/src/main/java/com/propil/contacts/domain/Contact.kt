@@ -6,7 +6,7 @@ data class Contact(
     val name: String,
     val surname: String,
     val phoneNumber: Long,
-    val photo: String = URL + randomNum + IMAGE_SIZE + WEB_P,
+    val photo: String = "",
     var id: Int = UNDEFINED_ID
 ) {
 
@@ -16,6 +16,7 @@ data class Contact(
         const val IMAGE_SIZE = "/100"
         const val WEB_P = ".webp"
 
-        var randomNum = (Random.nextInt(1, 1000)).toString()
+        var randomNum = (Random.nextInt(1, 100)).toString()
+
     }
 }
