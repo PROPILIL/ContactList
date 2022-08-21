@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.propil.contacts.R
 import com.propil.contacts.databinding.ActivityMainBinding
 import com.propil.contacts.databinding.ContactListFragmentBinding
+import com.propil.contacts.domain.Contact
 import com.propil.contacts.presentation.adapters.ContactListAdapter
 
 class ContactListFragment : Fragment() {
 
     private lateinit var contactListAdapter: ContactListAdapter
     private lateinit var viewModel: ContactListViewModel
-    private var _activityBinding: ActivityMainBinding? = null
-    private val activityBinding: ActivityMainBinding
-        get() = _activityBinding ?: throw RuntimeException("ActivityMainBinding = null")
 
     private var _binding: ContactListFragmentBinding? = null
     private val binding: ContactListFragmentBinding
@@ -60,7 +59,7 @@ class ContactListFragment : Fragment() {
 
     private fun setupLongClickListener() {
         contactListAdapter.onContactClick = {
-            viewModel.deleteContact(it)
+            deleteAlert(it)
         }
 
     }
@@ -72,10 +71,19 @@ class ContactListFragment : Fragment() {
             .commit()
     }
 
+    private fun deleteAlert(contact : Contact){
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle("Wanna delete contact?")
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deleteContact(contact)
+            }
+            .show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        _activityBinding = null
     }
 
     companion object {
