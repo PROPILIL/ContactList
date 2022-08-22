@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.propil.contacts.R
@@ -24,6 +25,8 @@ class ContactListFragment : Fragment() {
     private val binding: ContactListFragmentBinding
         get() = _binding ?: throw RuntimeException("ContactListFragmentBinding = null")
 
+    private var contactDetailContainer: FragmentContainerView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,12 +38,17 @@ class ContactListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        contactDetailContainer = binding.contactDetailContainer
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
         viewModel.contactListLiveData.observe(viewLifecycleOwner) {
             contactListAdapter.submitList(it)
         }
         setupRecyclerView()
         setUpSearch()
+    }
+
+    private fun isPortraitMode(): Boolean{
+        return contactDetailContainer == null
     }
 
     private fun setupRecyclerView() {
@@ -55,7 +63,11 @@ class ContactListFragment : Fragment() {
 
     private fun setupClickListener() {
         contactListAdapter.onContactClick = {
-            launchFragment(ContactDetailFragment.newInstanceEdit(it.id))
+            if(isPortraitMode()) {
+                launchFragment(ContactDetailFragment.newInstanceEdit(it.id))
+            } else {
+                launchFragmentLand(ContactDetailFragment.newInstanceEdit(it.id))
+            }
         }
     }
 
@@ -83,6 +95,14 @@ class ContactListFragment : Fragment() {
     private fun launchFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.main_activity_fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun launchFragmentLand(fragment: Fragment) {
+        requireActivity().supportFragmentManager.popBackStack()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.contact_detail_container, fragment)
             .addToBackStack(null)
             .commit()
     }
