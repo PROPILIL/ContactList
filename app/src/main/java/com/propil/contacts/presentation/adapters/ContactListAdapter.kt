@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -52,7 +53,7 @@ class ContactListAdapter :
          }
     }
 
-    fun modifyList(list: List<Contact>) {
+    private fun modifyList(list: List<Contact>) {
         unfilteredList = list
         submitList(list)
     }
@@ -78,5 +79,6 @@ class ContactListAdapter :
         }
         submitList(list)
     }
+
 
 }

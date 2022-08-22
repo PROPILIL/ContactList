@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="4dp"
-    app:cardBackgroundColor="@color/grey"
-    android:layout_marginBottom="8dp">
+    app:cardBackgroundColor="@color/grey">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

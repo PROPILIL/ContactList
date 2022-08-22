@@ -1,5 +1,6 @@
 package com.propil.contacts.presentation
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.propil.contacts.R
 import com.propil.contacts.databinding.ActivityMainBinding
@@ -57,6 +60,7 @@ class ContactListFragment : Fragment() {
             contactListAdapter = ContactListAdapter()
             adapter = contactListAdapter
         }
+        setupDecoration(recyclerViewContactList)
         setupClickListener()
         setupLongClickListener()
     }
@@ -117,6 +121,12 @@ class ContactListFragment : Fragment() {
             .show()
     }
 
+    private fun setupDecoration(recyclerView: RecyclerView){
+        val divider = DividerItemDecoration(activity, RecyclerView.VERTICAL)
+        divider.setDrawable(resources.getDrawable(R.drawable.recycler_view_divider))
+        recyclerView.addItemDecoration(divider)
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
