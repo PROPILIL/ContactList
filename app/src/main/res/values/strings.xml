@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Contacts</string>
+
+    <string name="error_input_name">Invalid name</string>
+    <string name="error_input_surname">Invalid surname</string>
+    <string name="error_input_phone">Invalid phone number</string>
 </resources>

@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.propil.contacts.R
 import com.propil.contacts.databinding.ContactDetailFragmentBinding
 import com.propil.contacts.databinding.ContactListFragmentBinding
 import com.propil.contacts.domain.Contact
 
-class ContactDetailFragment: Fragment() {
+class ContactDetailFragment : Fragment() {
 
     private var _binding: ContactDetailFragmentBinding? = null
     private val binding: ContactDetailFragmentBinding
@@ -39,6 +40,34 @@ class ContactDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactDetailViewModel::class.java]
         launchEditMode()
+        observeErrors()
+    }
+
+    private fun observeErrors() {
+        viewModel.errorInputName.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_name)
+            } else {
+                null
+            }
+            binding.nameFieldTextFieldLayout.error = message
+        }
+        viewModel.errorInputSurname.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_surname)
+            } else {
+                null
+            }
+            binding.surnameFieldTextFieldLayout.error = message
+        }
+        viewModel.errorInputPhone.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_phone)
+            } else {
+                null
+            }
+            binding.phoneFieldTextFieldLayout.error = message
+        }
     }
 
     private fun launchEditMode() {
@@ -61,15 +90,16 @@ class ContactDetailFragment: Fragment() {
         }
     }
 
-    private fun parseArgs(){
+    private fun parseArgs() {
         val args = requireArguments()
-        if(!args.containsKey(CONTACT_ID)) {
+        if (!args.containsKey(CONTACT_ID)) {
             throw RuntimeException("Argument contact_id is absent")
         } else {
             contactId = args.getInt(CONTACT_ID, Contact.UNDEFINED_ID)
 
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

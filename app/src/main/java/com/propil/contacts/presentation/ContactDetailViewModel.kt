@@ -23,6 +23,18 @@ class ContactDetailViewModel : ViewModel() {
     val contact: LiveData<Contact>
         get() = _contact
 
+    private val _errorInputName = MutableLiveData<Boolean>()
+    val errorInputName: LiveData<Boolean>
+        get() = _errorInputName
+
+    private val _errorInputSurname = MutableLiveData<Boolean>()
+    val errorInputSurname: LiveData<Boolean>
+        get() = _errorInputSurname
+
+    private val _errorInputPhone = MutableLiveData<Boolean>()
+    val errorInputPhone: LiveData<Boolean>
+        get() = _errorInputPhone
+
     private val _isWorkFinished = MutableLiveData<Unit>()
     val isWorkFinished: LiveData<Unit>
         get() = _isWorkFinished
@@ -74,10 +86,16 @@ class ContactDetailViewModel : ViewModel() {
         inputPhone: Long
     ): Boolean {
         var result = true
-        if(inputName.isBlank() || inputSurname.isBlank()) {
+        if(inputName.isBlank()) {
+            _errorInputName.value = true
+            result = false
+        }
+        if(inputSurname.isBlank()) {
+            _errorInputSurname.value = true
             result = false
         }
         if(inputPhone <= 0) {
+            _errorInputPhone.value = true
             result = false
         }
         return result
