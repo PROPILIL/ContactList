@@ -25,6 +25,7 @@ class ContactDetailFragment: Fragment() {
         super.onCreate(savedInstanceState)
         parseArgs()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -39,6 +40,7 @@ class ContactListFragment : Fragment() {
             contactListAdapter.submitList(it)
         }
         setupRecyclerView()
+        setUpSearch()
     }
 
     private fun setupRecyclerView() {
@@ -58,10 +60,24 @@ class ContactListFragment : Fragment() {
     }
 
     private fun setupLongClickListener() {
-        contactListAdapter.onContactClick = {
+        contactListAdapter.onLongContactClick = {
             deleteAlert(it)
         }
 
+    }
+
+    private fun setUpSearch(){
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                contactListAdapter.filter(newText)
+                return true
+            }
+        })
     }
 
     private fun launchFragment(fragment: Fragment) {

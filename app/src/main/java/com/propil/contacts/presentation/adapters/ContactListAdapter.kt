@@ -1,17 +1,23 @@
 package com.propil.contacts.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.propil.contacts.databinding.ContactItemBinding
 import com.propil.contacts.domain.Contact
+import java.util.*
 
-class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactDiffCallback()) {
+class ContactListAdapter :
+    ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactDiffCallback()) {
 
     var onContactClick: ((Contact) -> Unit)? = null
-    var onContactLongClick: ((Contact) -> Unit)? = null
+    var onLongContactClick: ((Contact) -> Unit)? = null
+    private var unfilteredList = currentList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val binding = ContactItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,15 +34,49 @@ class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHo
                 binding.contactPhoto.load(this.photo)
             }
         }
+        modifyList(currentList)
     }
 
-    inner class ContactViewHolder(val binding: ContactItemBinding): RecyclerView.ViewHolder(binding.root){
+
+    inner class ContactViewHolder(val binding: ContactItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 onContactClick?.invoke(getItem(adapterPosition))
             }
+            binding.root.setOnLongClickListener {
+                onLongContactClick?.invoke(getItem(adapterPosition))
+                true
+            }
+         }
+    }
+
+    fun modifyList(list: List<Contact>) {
+        unfilteredList = list
+        submitList(list)
+    }
+
+    fun filter(query: CharSequence?) {
+        val list = mutableListOf<Contact>()
+
+        if(!query.isNullOrEmpty()){
+            list.addAll(unfilteredList.filter {
+                it.name
+                    .lowercase(Locale.getDefault())
+                    .contains(query
+                        .toString()
+                        .lowercase(Locale.getDefault())) ||
+                it.surname
+                    .lowercase(Locale.getDefault())
+                    .contains(query
+                        .toString()
+                        .lowercase(Locale.getDefault()))
+            })
+        } else {
+            list.addAll(unfilteredList)
         }
+        submitList(list)
     }
 
 }
