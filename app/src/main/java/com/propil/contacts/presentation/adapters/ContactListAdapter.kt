@@ -31,7 +31,6 @@ class ContactListAdapter :
                 binding.contactName.text = this.name
                 binding.contactSurname.text = this.surname
                 binding.contactPhone.text = this.phoneNumber.toString()
-                //FIXME: THE SAME IMAGE BUG (look in Contact data class)
                 binding.contactPhoto.load(this.photo)
             }
         }
